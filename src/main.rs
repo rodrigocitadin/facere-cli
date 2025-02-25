@@ -13,7 +13,7 @@ struct Task {
 }
 
 #[derive(Parser)]
-#[command(name = "task-cli")]
+#[command(name = "facere-cli")]
 #[command(about = "A simple CLI for managing tasks", long_about = None)]
 struct Cli {
     #[command(subcommand)]
@@ -60,6 +60,27 @@ fn list_tasks() {
 }
 
 fn toggle_task(id: u32) {
+    let mut tasks = load_tasks();
+    let mut found = false;
+
+    for task in &mut tasks {
+        if task.id == id {
+            task.completed = !task.completed;
+            found = true;
+            break;
+        }
+    }
+
+    if found {
+        save_tasks(&tasks);
+        println!(
+            "Task {} is now {}", 
+            id, 
+            if tasks.iter().find(|t| t.id == id).unwrap().completed { "completed" } else { "pending" }
+        );
+    } else {
+        println!("Task not found");
+    }
 }
 
 fn tasks_by_date(date: String) {
