@@ -65,3 +65,7 @@ facere-cli filter 2025-02-26
 ## Storage 
 
 Tasks are stored in a JSON file in the current directory. Future versions may use a more appropriate location.
+
+## License
+
+This project is licensed under the MIT license.
