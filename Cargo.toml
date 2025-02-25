@@ -2,8 +2,21 @@
 name = "facere-cli"
 version = "0.1.0"
 edition = "2021"
+authors = ["Rodrigo Citadin <citadinrodrigo@gmail.com>"]
+description = "A simple CLI for managing todo tasks"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/rodrigocitadin/facere-cli"
+homepage = "https://github.com/rodrigocitadin/facere-cli"
+documentation = "https://docs.rs/facere-cli"
+keywords = ["cli", "tasks", "management"]
+categories = ["command-line-utilities"]
+readme = "README.md"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
 clap = { version = "4.4", features = ["derive"] }
+serde_json = "1.0"
+
+[[bin]]
+name = "facere-cli"
+path = "src/main.rs"
