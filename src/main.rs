@@ -29,7 +29,11 @@ enum Commands {
 }
 
 fn load_tasks() -> Vec<Task> {
-    Vec::new()
+    if let Ok(data) = fs::read_to_string(FILE_PATH) {
+        serde_json::from_str(&data).unwrap_or_else(|_| vec![])
+    } else {
+        vec![]
+    }
 }
 
 
@@ -48,6 +52,11 @@ fn add_task(description: String, date: String) {
 }
 
 fn list_tasks() {
+    let tasks = load_tasks();
+    for task in &tasks {
+        let status = if task.completed { "[X]" } else { "[ ]" };
+        println!("{}. {} {} - {}", task.id, status, task.date, task.description);
+    }
 }
 
 fn toggle_task(id: u32) {
