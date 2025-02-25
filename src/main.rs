@@ -1,5 +1,8 @@
 use clap::{Parser, Subcommand};
 use serde::{Deserialize, Serialize};
+use std::fs;
+
+const FILE_PATH: &str = "tasks.json";
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Task {
@@ -29,10 +32,19 @@ fn load_tasks() -> Vec<Task> {
     Vec::new()
 }
 
+
 fn save_tasks(tasks: &Vec<Task>) {
+    if let Ok(json) = serde_json::to_string_pretty(tasks) {
+        fs::write(FILE_PATH, json).expect("Failed to write file");
+    }
 }
 
 fn add_task(description: String, date: String) {
+    let mut tasks = load_tasks();
+    let id = tasks.len() as u32 + 1;
+    tasks.push(Task { id, description, date, completed: false });
+    save_tasks(&tasks);
+    println!("Task added successfully!");
 }
 
 fn list_tasks() {
