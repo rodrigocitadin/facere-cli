@@ -63,6 +63,11 @@ fn toggle_task(id: u32) {
 }
 
 fn tasks_by_date(date: String) {
+    let tasks = load_tasks();
+    for task in tasks.iter().filter(|t| t.date == date) {
+        let status = if task.completed { "[X]" } else { "[ ]" };
+        println!("{}. {} {} - {}", task.id, status, task.date, task.description);
+    }
 }
 
 fn main() {
